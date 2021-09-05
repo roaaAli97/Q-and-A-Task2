@@ -1,0 +1,17 @@
+body{
+    font:24px;
+    margin:0;
+}
+.container{
+    background-color: azure;
+    padding:4em;
+    text-align:center;
+    margin:2rem
+}
+.btn{
+  background-color: cadetblue;
+  padding:1em 2em;
+  border-radius: 2;
+  text-decoration: none;
+  display:inline-block;
+}
