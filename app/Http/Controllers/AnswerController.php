@@ -16,12 +16,13 @@ class AnswerController extends Controller
         return response()->json($answers);
     }
     public function store(Request $request,$id){
-        $newAnswer=new Answer([
-            'question_Id'=>$id,
-            'answer'=>$request->get('answer')
-        ]);
-        $newAnswer->save();
-        return response()->json($newAnswer);
+        //$id should be the id of the question
+        $question=Question::find($id);
+        $answer=new Answer();
+        $answer->answer=$request->get('answer');
+        $question->answers()->save($answer);
+
+        
     }
     //showing one answer
     public function show($id){
