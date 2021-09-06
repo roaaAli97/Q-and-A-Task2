@@ -9,4 +9,5 @@ class Answer extends Model
 {
     use HasFactory;
     public $timestamps=false;
+    protected $fillable=array('question_id','answer');
 }

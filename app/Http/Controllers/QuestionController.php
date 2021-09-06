@@ -9,25 +9,39 @@ class QuestionController extends Controller
 {
     public function index(){
         $questions=Question::all();
-        return view('Question\index',compact('questions'));
+        return response()->json($questions);
     }
-    public function create(){
-        return view('Question\create');
+     
+    public function store(Request $request){
+          
+        //   $request->validate([
+        //      'Username'=>'required',
+        //      'Question'=>'required'
+        //   ]);
+          $newQuestion=new Question([
+              'Username'=>$request->get('Username'),
+              'Question'=>$request->get('Question')
+          ]);
+          $newQuestion->save();
+        return response()->json($newQuestion);
     }
-    public function show(){
-        $question=new Question();
-        $question->Username=request('username');
-        $question->Question=request('question-field');
-        error_log(request('question-field'));
-        $question->save();
-      
+    public function show($id){
+        
+      $question=Question::findOrFail($id);
+       return response()->json($question);
 
-        return redirect('/questions');
+    }
+    public function update(Request $request ,$id){
+       $updatedQuestion=Question::findOrFail($id);
+
+       $updatedQuestion->Question=$request->get('question');
+
+       $updatedQuestion->save();
+       return response()->json($updatedQuestion);
     }
     public function  destroy($id){
-        DB::table('questions')
-            ->where('id',$id)
-             ->delete();
-        return redirect('/questions');
+        $question=Question::findOrFail($id);
+        $question->delete();
+        return response()->json($question::all());
     }
 }
